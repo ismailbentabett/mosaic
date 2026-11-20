@@ -19,7 +19,11 @@ self-hosted app, with a chat-first UI and an MCP server so Claude can run it wit
 ![SQLite](https://img.shields.io/badge/SQLite-WAL-003B57?logo=sqlite&logoColor=white)
 ![MCP](https://img.shields.io/badge/MCP-132%20tools-F59E0B)
 
+[![Android APK](https://img.shields.io/badge/Android-APK-3DDC84?logo=android&logoColor=white)](https://github.com/ismailbentabett/mosaic/releases/latest/download/Mosaic.apk)
+[![Windows installer](https://img.shields.io/badge/Windows-installer-0078D4?logo=windows&logoColor=white)](https://github.com/ismailbentabett/mosaic/releases/latest/download/Mosaic-Setup.exe)
+
 [**Live demo**](https://ismailbentabett.github.io/mosaic/) ·
+[Download](#download) ·
 [Architecture](docs/ARCHITECTURE.md) ·
 [Plugins](docs/PLUGINS.md) ·
 [Imports](docs/IMPORTS.md) ·
@@ -47,6 +51,20 @@ it through the same rules the UI uses.
 
 > The demo runs entirely in your browser on a mock backend seeded with a fictional persona, *Sam*.
 > Nothing you type leaves the page.
+
+## Download
+
+Mosaic runs on the web, on Android and on Windows. The native apps bundle the same offline demo:
+no server, no account, nothing leaves the device.
+
+| Platform | Get it | Notes |
+|---|---|---|
+| 🌐 Web | [Open the live demo](https://ismailbentabett.github.io/mosaic/) | Any modern browser, phone or desktop |
+| 🤖 Android 7+ | [**Mosaic.apk**](https://github.com/ismailbentabett/mosaic/releases/latest/download/Mosaic.apk) | Allow "Install unknown apps" when asked |
+| 🪟 Windows 10/11 | [**Mosaic-Setup.exe**](https://github.com/ismailbentabett/mosaic/releases/latest/download/Mosaic-Setup.exe) | Unsigned: SmartScreen → **More info → Run anyway** |
+
+Every `v*` tag rebuilds both apps in CI ([release workflow](.github/workflows/release.yml)): Capacitor
+for Android, Tauri 2 for Windows. All versions: [Releases](https://github.com/ismailbentabett/mosaic/releases).
 
 ## Highlights
 
@@ -242,6 +260,7 @@ Run from the repository root.
 ```text
 api/   Hono + node:sqlite + MCP server + CLI       → api/DESIGN.md
 web/   React 19 + Mantine 9 + Vite 7, mock backend
+       capacitor.config.ts → Android app · src-tauri/ → Windows app
 docs/  architecture guide and screenshots
 ```
 
