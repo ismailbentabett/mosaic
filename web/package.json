@@ -29,8 +29,8 @@
     "@mantine/spotlight": "9.7.4",
     "@tabler/icons-react": "3.51.0",
     "dayjs": "1.11.23",
-    "react": "19.2.9",
-    "react-dom": "19.2.9",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "react-router-dom": "7.18.5",
     "recharts": "3.10.1",
     "vaul": "1.1.2"
