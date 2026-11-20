@@ -4,3 +4,5 @@ dist-demo/
 audit-out/
 .env.local
 .env.*.local
+android/
+dist-native/
