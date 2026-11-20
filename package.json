@@ -7,14 +7,18 @@
   "engines": {
     "node": ">=22.13"
   },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-fetch": "^3.3.2"
+  },
   "scripts": {
     "setup": "npm ci --prefix api && npm ci --prefix web",
-    "dev:web": "npm run dev --prefix web",
-    "dev:demo": "npm run dev:demo --prefix web",
+    "dev:web": "node init && npm run dev --prefix web",
+    "dev:demo": "node init && npm run dev:demo --prefix web",
     "typecheck": "npm run typecheck --prefix api && npm run typecheck --prefix web",
     "lint": "npm run lint:ui --prefix web",
     "test": "npm test --prefix api && npm test --prefix web",
-    "build": "npm run build --prefix api && npm run build --prefix web && npm run build:demo --prefix web",
+    "build": "node init && npm run build --prefix api && npm run build --prefix web && npm run build:demo --prefix web",
     "check": "npm run typecheck && npm run lint && npm test && npm run build",
     "screenshots": "npm run build:demo --prefix web && npm run screenshots --prefix web"
   }
