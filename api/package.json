@@ -7,10 +7,10 @@
     "node": ">=22.13"
   },
   "scripts": {
-    "build": "node build.mjs",
+    "build": "node init && node build.mjs",
     "typecheck": "tsc --noEmit",
     "test": "node --test --experimental-strip-types test/*.test.ts",
-    "start": "node dist/server.js"
+    "start": "node init && node dist/server.js"
   },
   "dependencies": {
     "@hono/node-server": "2.1.7",
