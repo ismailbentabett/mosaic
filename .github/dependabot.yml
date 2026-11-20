@@ -1,0 +1,28 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /api
+    schedule:
+      interval: weekly
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+    groups:
+      api-deps:
+        patterns: ['*']
+  - package-ecosystem: npm
+    directory: /web
+    schedule:
+      interval: weekly
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
+    groups:
+      mantine:
+        patterns: ['@mantine/*']
+      react:
+        patterns: ['react', 'react-dom', '@types/react*']
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

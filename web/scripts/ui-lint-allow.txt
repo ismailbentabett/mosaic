@@ -1,0 +1,9 @@
+# path:needle — lines in this file are allowed exceptions to scripts/ui-lint.mjs.
+# The brand mark is fixed artwork, not themed UI.
+app/Brand.tsx:fill="var(--brand-tile, #0F172A)"
+app/Brand.tsx:fill="#4F46E5"
+app/Brand.tsx:fill="#F59E0B"
+app/Brand.tsx:fill="#14B8A6"
+app/Brand.tsx:fill="#F43F5E"
+# Two-line chip label needs a hairline gap.
+features/review/DayRate.tsx:flexDirection: 'column', gap: 2

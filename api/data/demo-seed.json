@@ -1,0 +1,570 @@
+{
+  "version": 1,
+  "note": "Demo persona for Mosaic: Sam, a designer in Springfield. Fictional. No secrets. Idempotent: run again safely.",
+  "facts": [
+    {
+      "key": "who.name",
+      "value": "Sam",
+      "confidence": 0.9
+    },
+    {
+      "key": "who.city",
+      "value": "Springfield",
+      "confidence": 0.9
+    },
+    {
+      "key": "who.timezone",
+      "value": "UTC",
+      "confidence": 0.9
+    },
+    {
+      "key": "who.languages",
+      "value": "English (native)",
+      "confidence": 0.7
+    },
+    {
+      "key": "who.education",
+      "value": "Self-taught design, online courses",
+      "confidence": 0.7
+    },
+    {
+      "key": "body.sex",
+      "value": "unspecified",
+      "confidence": 0.4
+    },
+    {
+      "key": "focus.hardest_time",
+      "value": "Starting work; a 10-minute kickoff helps (default, unanswered)",
+      "confidence": 0.4
+    },
+    {
+      "key": "focus.reminder_style",
+      "value": "Direct, short, no streaks, no guilt; one next action",
+      "confidence": 0.9
+    },
+    {
+      "key": "focus.best_energy",
+      "value": "09:00-12:00 (default, unanswered)",
+      "confidence": 0.4
+    },
+    {
+      "key": "focus.accountability",
+      "value": "One friend by text on Sundays (default)",
+      "confidence": 0.4
+    },
+    {
+      "key": "sleep.bed",
+      "value": "23:30",
+      "confidence": 0.9
+    },
+    {
+      "key": "sleep.wake",
+      "value": "07:30",
+      "confidence": 0.9
+    },
+    {
+      "key": "sleep.wind_down",
+      "value": "22:30-23:30, screens dim",
+      "confidence": 0.7
+    },
+    {
+      "key": "work.business",
+      "value": "Design work, mostly from home",
+      "confidence": 0.9
+    },
+    {
+      "key": "work.revenue_target",
+      "value": "Steady income",
+      "confidence": 0.9
+    },
+    {
+      "key": "work.revenue_current",
+      "value": "0",
+      "confidence": 0.9
+    },
+    {
+      "key": "work.offer",
+      "value": "Product and web design",
+      "confidence": 0.7
+    },
+    {
+      "key": "work.skills",
+      "value": "HTML, CSS, JavaScript, Figma, basic React",
+      "confidence": 0.7
+    },
+    {
+      "key": "work.history",
+      "value": "Two years of design work",
+      "confidence": 0.7
+    },
+    {
+      "key": "money.burn_personal_usd_month",
+      "value": "250 (estimate)",
+      "confidence": 0.4
+    },
+    {
+      "key": "money.rate_source",
+      "value": "Manual rate, updated weekly",
+      "confidence": 0.7
+    },
+    {
+      "key": "money.currencies",
+      "value": "USD, EUR",
+      "confidence": 0.9
+    },
+    {
+      "key": "money.runway_alert_weeks",
+      "value": "8",
+      "confidence": 0.7
+    },
+    {
+      "key": "family.time",
+      "value": "Dinner at home most evenings",
+      "confidence": 0.9
+    },
+    {
+      "key": "gym.time",
+      "value": "18:00, three or four times a week",
+      "confidence": 0.7
+    },
+    {
+      "key": "gym.days_per_week",
+      "value": "4",
+      "confidence": 0.7
+    },
+    {
+      "key": "rest.day",
+      "value": "Saturday",
+      "confidence": 0.9
+    },
+    {
+      "key": "device.phone",
+      "value": "Android phone",
+      "confidence": 0.7
+    },
+    {
+      "key": "device.pc",
+      "value": "Windows laptop",
+      "confidence": 0.7
+    },
+    {
+      "key": "life.values",
+      "value": "Faith, family, craft, steady money",
+      "confidence": 0.7
+    },
+    {
+      "key": "life.pain_points",
+      "value": "Too many open tabs; work spills into the evening",
+      "confidence": 0.7
+    },
+    {
+      "key": "life.tools",
+      "value": "Mosaic, a paper notebook, Figma",
+      "confidence": 0.7
+    },
+    {
+      "key": "food.meals",
+      "value": "Breakfast, lunch, dinner; tea in the afternoon",
+      "confidence": 0.7
+    },
+    {
+      "key": "learning.focus",
+      "value": "Writing and drawing",
+      "confidence": 0.7
+    },
+    {
+      "key": "money.savings_goal",
+      "value": "An emergency fund of three months of costs",
+      "confidence": 0.7
+    },
+    {
+      "key": "learning.reading",
+      "value": "One book a month, mostly design and history",
+      "confidence": 0.7
+    },
+    {
+      "key": "body.running",
+      "value": "Training for a first 10k",
+      "confidence": 0.7
+    }
+  ],
+  "asks": [
+    {
+      "key": "money.burn_personal_usd_month",
+      "module": "money",
+      "question": "About how much do you spend on yourself a month, in USD?",
+      "why": "Runway uses it until enough expenses are logged.",
+      "answer_type": "number",
+      "priority": 30
+    },
+    {
+      "key": "money.savings_target_usd",
+      "module": "money",
+      "question": "How big should the emergency fund be, in USD?",
+      "why": "The savings goal uses $3,000 as a placeholder.",
+      "answer_type": "number",
+      "priority": 40
+    },
+    {
+      "key": "focus.best_energy",
+      "module": "focus",
+      "question": "When is your focus best?",
+      "why": "Hard tasks go to that window.",
+      "answer_type": "choice",
+      "options": [
+        "09:00-12:00",
+        "15:00-18:00",
+        "20:00-23:00",
+        "It changes"
+      ],
+      "priority": 35
+    },
+    {
+      "key": "people.accountability_friend",
+      "module": "people",
+      "question": "Is there one friend you text about your week?",
+      "why": "The People card can remind you to check in.",
+      "answer_type": "yes_no",
+      "priority": 60
+    }
+  ],
+  "areas": [
+    {
+      "key": "body",
+      "vision": "Gym three evenings a week, a run on the weekend, in bed by 23:30."
+    },
+    {
+      "key": "money",
+      "vision": "Every expense logged; three months of costs saved."
+    },
+    {
+      "key": "learning",
+      "vision": "One book a month and a weekly sketch."
+    },
+    {
+      "key": "people",
+      "vision": "Dinner at home protected; one call to a friend each week."
+    },
+    {
+      "key": "home",
+      "vision": "Bills and chores done on Mondays, before they pile up."
+    },
+    {
+      "name": "Admin",
+      "emoji": "🗂️",
+      "vision": "Papers, bills and renewals sorted before deadlines."
+    }
+  ],
+  "savings_goals": [
+    {
+      "name": "Emergency fund",
+      "target_usd": 3000,
+      "target_date": "+270d"
+    }
+  ],
+  "projects": [
+    {
+      "name": "Side project",
+      "area": "work"
+    },
+    {
+      "name": "Portfolio site",
+      "area": "work"
+    },
+    {
+      "name": "Reading list",
+      "area": "learning"
+    },
+    {
+      "name": "Admin",
+      "area": "Admin"
+    },
+    {
+      "name": "Home",
+      "area": "home"
+    }
+  ],
+  "habits": [
+    {
+      "name": "Deep work",
+      "target_per_week": 3,
+      "area": "work"
+    },
+    {
+      "name": "Reading",
+      "target_per_week": 5,
+      "area": "learning"
+    },
+    {
+      "name": "Run",
+      "target_per_week": 2,
+      "area": "body"
+    },
+    {
+      "name": "Screens off by 23:00",
+      "target_per_week": 7,
+      "area": "body"
+    },
+    {
+      "name": "Portfolio update",
+      "target_per_week": 1,
+      "area": "work"
+    },
+    {
+      "name": "Weekly review",
+      "target_per_week": 1,
+      "area": "home"
+    },
+    {
+      "name": "Call a friend",
+      "target_per_week": 1,
+      "area": "people"
+    },
+    {
+      "name": "Sketch",
+      "target_per_week": 2,
+      "area": "learning"
+    }
+  ],
+  "goals": [
+    {
+      "seed_key": "life:side_project",
+      "name": "Ship the side project",
+      "area": "work",
+      "auto": "milestones",
+      "horizon": "year",
+      "target_date": "+365d",
+      "why": "One finished thing beats ten started.",
+      "next_step": "Write the one-page plan",
+      "milestones": [
+        [
+          "Write the plan",
+          null
+        ],
+        [
+          "Build the first version",
+          null
+        ],
+        [
+          "Share it with three friends",
+          null
+        ]
+      ],
+      "links": [
+        [
+          "project",
+          "Side project"
+        ],
+        [
+          "habit",
+          "Deep work"
+        ]
+      ]
+    },
+    {
+      "seed_key": "life:portfolio",
+      "name": "Portfolio with five case studies",
+      "area": "work",
+      "auto": "milestones",
+      "horizon": "quarter",
+      "target_date": "+90d",
+      "why": "Shows the work before the first call.",
+      "next_step": "Write the first case study",
+      "milestones": [
+        [
+          "Case study 1",
+          null
+        ],
+        [
+          "Case study 2",
+          null
+        ],
+        [
+          "Case study 3",
+          null
+        ]
+      ],
+      "links": [
+        [
+          "project",
+          "Portfolio site"
+        ],
+        [
+          "habit",
+          "Portfolio update"
+        ]
+      ]
+    },
+    {
+      "seed_key": "life:read_books",
+      "name": "Read 12 books",
+      "area": "learning",
+      "target_value": 12,
+      "unit": "books",
+      "horizon": "year",
+      "target_date": "+365d",
+      "start_value": 0,
+      "why": "One book a month.",
+      "next_step": "Read 10 pages",
+      "links": [
+        [
+          "habit",
+          "Reading"
+        ],
+        [
+          "project",
+          "Reading list"
+        ]
+      ]
+    },
+    {
+      "seed_key": "life:run_10k",
+      "name": "Run a 10k",
+      "area": "body",
+      "auto": "milestones",
+      "horizon": "quarter",
+      "target_date": "+120d",
+      "why": "A clear finish line for fitness.",
+      "next_step": "Go for a 20-minute run",
+      "milestones": [
+        [
+          "Run 3k without stopping",
+          null
+        ],
+        [
+          "Run 5k",
+          null
+        ],
+        [
+          "Run 10k",
+          null
+        ]
+      ],
+      "links": [
+        [
+          "habit",
+          "Run"
+        ]
+      ]
+    },
+    {
+      "seed_key": "life:savings",
+      "name": "Emergency fund",
+      "area": "money",
+      "auto": "savings:emergency fund",
+      "target_value": 3000,
+      "unit": "USD",
+      "horizon": "year",
+      "target_date": "+270d",
+      "why": "Three months of costs. The amount is a placeholder.",
+      "next_step": "Log this week's savings transfer"
+    },
+    {
+      "seed_key": "life:gym",
+      "template": "gym",
+      "name": "Gym sessions this quarter",
+      "target_value": 36,
+      "target_date": "+90d",
+      "why": "Strength that lasts.",
+      "next_step": "Go to the 18:00 gym session"
+    },
+    {
+      "seed_key": "life:admin",
+      "name": "Papers in order",
+      "area": "Admin",
+      "auto": "milestones",
+      "horizon": "year",
+      "target_date": "+180d",
+      "why": "No last-minute stress over renewals.",
+      "next_step": "List the papers that expire next year",
+      "milestones": [
+        [
+          "Renew ID card",
+          "+60d"
+        ],
+        [
+          "File the yearly papers",
+          "+120d"
+        ],
+        [
+          "Sort the bills folder",
+          null
+        ]
+      ],
+      "links": [
+        [
+          "project",
+          "Admin"
+        ]
+      ]
+    },
+    {
+      "seed_key": "life:sketchbook",
+      "name": "Fill one sketchbook",
+      "area": "learning",
+      "auto": "milestones",
+      "horizon": "quarter",
+      "target_date": "+90d",
+      "why": "Drawing keeps the eye sharp.",
+      "next_step": "Draw one cup for 10 minutes",
+      "milestones": [
+        [
+          "First 10 pages",
+          null
+        ],
+        [
+          "First 30 pages",
+          null
+        ],
+        [
+          "Last page",
+          null
+        ]
+      ],
+      "links": [
+        [
+          "habit",
+          "Sketch"
+        ]
+      ]
+    }
+  ],
+  "people": [
+    {
+      "name": "Family",
+      "relation": "family",
+      "cadence_days": 1,
+      "note": "Dinner at home most evenings."
+    }
+  ],
+  "occasions": [
+    {
+      "name": "Portfolio launch",
+      "kind": "other",
+      "date": "+90d",
+      "lead_days": 7,
+      "note": "Five case studies live."
+    },
+    {
+      "name": "ID card renewal",
+      "kind": "other",
+      "date": "+60d",
+      "lead_days": 14,
+      "note": "Bring two photos."
+    },
+    {
+      "name": "10k race",
+      "kind": "other",
+      "date": "+120d",
+      "lead_days": 14,
+      "note": "Local charity run."
+    },
+    {
+      "name": "Emergency fund target",
+      "kind": "other",
+      "date": "+270d",
+      "lead_days": 30,
+      "note": "Placeholder $3,000."
+    }
+  ]
+}

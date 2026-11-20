@@ -1,0 +1,21 @@
+{
+  "name": "mosaic",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mosaic, the everything app: tasks, calendar, habits, money, food, gym and notes in one SQLite-backed app with a chat-first UI and an MCP server.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "setup": "npm ci --prefix api && npm ci --prefix web",
+    "dev:web": "npm run dev --prefix web",
+    "dev:demo": "npm run dev:demo --prefix web",
+    "typecheck": "npm run typecheck --prefix api && npm run typecheck --prefix web",
+    "lint": "npm run lint:ui --prefix web",
+    "test": "npm test --prefix api && npm test --prefix web",
+    "build": "npm run build --prefix api && npm run build --prefix web && npm run build:demo --prefix web",
+    "check": "npm run typecheck && npm run lint && npm test && npm run build",
+    "screenshots": "npm run build:demo --prefix web && npm run screenshots --prefix web"
+  }
+}

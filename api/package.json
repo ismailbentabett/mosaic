@@ -1,0 +1,26 @@
+{
+  "name": "mosaic-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --experimental-strip-types test/*.test.ts",
+    "start": "node dist/server.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "2.1.7",
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "hono": "4.13.18",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.1",
+    "esbuild": "0.28.2",
+    "typescript": "5.9.3"
+  }
+}
