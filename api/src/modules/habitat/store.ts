@@ -409,7 +409,7 @@ export const addHelped = (h: { id?: string; situation: string; thing: string; no
   return need(one<Row>(`SELECT * FROM what_helped WHERE id = ?`, id), 'entry');
 };
 export const listHelped = (situation?: string, limit = 100) => {
-  const rows = all<Row>(`SELECT * FROM what_helped WHERE deleted_at IS NULL ORDER BY created_at DESC LIMIT ?`, Math.min(Math.max(limit, 1), 500));
+  const rows = all<Row>(`SELECT * FROM what_helped WHERE deleted_at IS NULL ORDER BY created_at DESC, rowid DESC LIMIT ?`, Math.min(Math.max(limit, 1), 500));
   if (!situation) return rows;
   const q = normalise(situation);
   return rows.filter((r) => normalise(r.situation).includes(q));
@@ -417,7 +417,7 @@ export const listHelped = (situation?: string, limit = 100) => {
 /** Search situation, thing and note. */
 export const searchHelped = (q: string, limit = 50) => {
   const n = normalise(clean(q, 80, 'q'));
-  return all<Row>(`SELECT * FROM what_helped WHERE deleted_at IS NULL ORDER BY created_at DESC`)
+  return all<Row>(`SELECT * FROM what_helped WHERE deleted_at IS NULL ORDER BY created_at DESC, rowid DESC`)
     .filter((r) => [r.situation, r.thing, r.note].some((x) => normalise(x).includes(n))).slice(0, limit);
 };
 /** "Things that helped, most often first" (plain counts, no chart). */
