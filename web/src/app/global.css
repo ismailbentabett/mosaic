@@ -1,0 +1,603 @@
+/*
+ * The only global stylesheet. Everything else is Mantine props + theme.ts.
+ * Kept here: page floor, tabular numbers, vaul bottom sheet, safe areas, skip link, keyboard state.
+ */
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  background: var(--app-bg);
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Numbers line up (amounts, kcal, kg, times). */
+.num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link: visible only on keyboard focus. */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 1000;
+  padding: 8px 14px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--mantine-radius-md);
+  background: var(--mantine-primary-color-filled);
+  color: var(--mantine-primary-color-contrast);
+  font-weight: 600;
+  transform: translateY(-150%);
+  transition: transform 120ms ease;
+}
+.skip-link:focus-visible {
+  transform: none;
+  outline: 2px solid var(--mantine-color-text);
+}
+
+/* Safe areas: --safe-area-inset-* if a host sets them, else env(). The shell heights in AppShell.tsx add these on top. */
+:root {
+  --sat: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  --sab: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+  --sal: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
+  --sar: var(--safe-area-inset-right, env(safe-area-inset-right, 0px));
+  /* Display sizes for big numbers (lint bans raw fz numbers). */
+  --app-fz-card: 1.75rem;
+  --app-fz-stat: 2rem;
+  --app-fz-display: 2.5rem;
+  --app-fz-hero: 3.5rem;
+}
+
+/* App shell surfaces. */
+.app-header {
+  background: var(--app-bg);
+  padding-top: var(--sat);
+  padding-left: var(--sal);
+  padding-right: var(--sar);
+}
+.app-navbar {
+  background: var(--app-bg);
+}
+.app-main {
+  background: var(--app-bg);
+}
+
+/* Phone bottom bar. Mantine sizes the footer as height + env(safe-area-inset-bottom), but our height prop already
+   holds --sab: on an edge-to-edge phone (S24 Ultra, 3-button nav) that made the bar ~48px taller than the space
+   Main reserves, so it covered the chat composer. Pin it to exactly the reserved height. */
+.app-footer {
+  height: var(--app-shell-footer-height) !important;
+  background: var(--app-surface);
+  padding-bottom: var(--sab);
+  padding-left: var(--sal);
+  padding-right: var(--sar);
+  transition: transform 160ms ease;
+}
+body.kb-open .app-footer {
+  transform: translateY(110%);
+}
+.tab-btn {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 100%;
+  min-width: 0;
+  border: 0;
+  background: none;
+  color: var(--mantine-color-dimmed);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.tab-btn[data-active] {
+  color: var(--mantine-primary-color-filled);
+}
+.tab-btn:focus-visible {
+  outline: 2px solid var(--mantine-primary-color-filled);
+  outline-offset: -4px;
+  border-radius: var(--mantine-radius-md);
+}
+.tab-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 28px;
+  border-radius: 99px;
+  transition: background 140ms ease;
+}
+.tab-btn[data-active] .tab-pill {
+  background: var(--mantine-primary-color-light);
+}
+.add-btn {
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  margin: 0 6px;
+  border-radius: 18px;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--mantine-primary-color-filled);
+  color: var(--mantine-primary-color-contrast);
+  box-shadow: 0 6px 18px -6px color-mix(in srgb, var(--mantine-primary-color-filled) 70%, transparent);
+  cursor: pointer;
+  transition: transform 120ms ease;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+}
+.add-btn:active {
+  transform: scale(0.94);
+}
+.add-btn:focus-visible {
+  outline: 2px solid var(--mantine-color-text);
+  outline-offset: 2px;
+}
+
+/* Desktop sidebar group labels. */
+/* Sidebar: compact rows; each section (Life, Brain) is its hub row with the modules indented under a guide line. */
+.nav-item {
+  border-radius: var(--mantine-radius-md);
+  padding-block: 6px;
+}
+.nav-section {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--mantine-color-default-border);
+}
+.nav-nested {
+  margin-left: 21px;
+  padding-left: 6px;
+  border-left: 1px solid var(--mantine-color-default-border);
+}
+.nav-nested .nav-item {
+  padding-block: 2px;
+}
+
+/* Mantine pads main by the header and footer heights, which already include the insets. Landscape notch: pad the sides. */
+@media (max-width: 47.99em) {
+  .app-main {
+    padding-left: var(--sal) !important;
+    padding-right: var(--sar) !important;
+  }
+}
+
+/* A page that fills the screen (chat): the composer sits on the bottom edge even when the chat is short. */
+.page-fill {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - var(--app-shell-header-offset, 56px) - var(--app-shell-footer-offset, 0px));
+}
+.page-fill-body {
+  flex: 1 1 auto;
+}
+.page-fill-grow {
+  flex: 1 1 auto;
+}
+
+/* vaul bottom sheet (phones). */
+.vaul-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: var(--app-scrim);
+}
+.vaul-content {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 301;
+  display: flex;
+  flex-direction: column;
+  max-height: 92dvh;
+  background: var(--mantine-color-body);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-top: 1px solid var(--mantine-color-default-border);
+  padding-bottom: var(--sab);
+  outline: none;
+}
+.vaul-content[data-tall] {
+  height: 92dvh;
+}
+.vaul-handle {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 5px;
+  margin: 8px auto 10px;
+  border-radius: 99px;
+  background: var(--mantine-color-default-border);
+}
+.vaul-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 var(--mantine-spacing-md) var(--mantine-spacing-md);
+}
+/* Desktop sheets scroll on y only. Mantine's autosize ScrollArea gives its content min-width: min-content,
+   so a nowrap chip row would widen the whole modal instead of scrolling inside its own row. */
+.mantine-Modal-content .mantine-ScrollArea-root[data-autosize] > .mantine-ScrollArea-viewport > .mantine-ScrollArea-content {
+  min-width: 0;
+}
+.vaul-footer {
+  flex: 0 0 auto;
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+  border-top: 1px solid var(--mantine-color-default-border);
+  background: var(--mantine-color-body);
+}
+/* --kb-h = the part of the layout viewport the keyboard covers. 0 when the browser shrinks the layout itself,
+   the keyboard height in a phone browser that only shrinks the visual viewport. */
+body.kb-open .vaul-content {
+  bottom: var(--kb-h, 0px);
+  max-height: calc(100dvh - var(--kb-h, 0px) - var(--sat) - 12px);
+}
+
+/* Toasts clear the status bar on edge-to-edge phones. */
+.mantine-Notifications-root[data-position^='top'] {
+  top: calc(var(--sat) + 8px);
+}
+
+/* Markdown rendered by Md (notes, Ask answers). */
+.md {
+  font-size: var(--mantine-font-size-sm);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.md > :first-child {
+  margin-top: 0;
+}
+.md > :last-child {
+  margin-bottom: 0;
+}
+.md h1,
+.md h2,
+.md h3 {
+  margin: 1em 0 0.4em;
+  line-height: 1.3;
+}
+.md h1 {
+  font-size: 1.25rem;
+}
+.md h2 {
+  font-size: 1.1rem;
+}
+.md h3 {
+  font-size: 1rem;
+}
+.md p,
+.md ul,
+.md ol,
+.md pre,
+.md blockquote {
+  margin: 0 0 0.75em;
+}
+.md ul,
+.md ol {
+  padding-left: 1.3em;
+}
+.md code {
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 0.9em;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--mantine-color-default-hover);
+}
+.md pre {
+  padding: 10px 12px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--mantine-color-default-hover);
+  overflow-x: auto;
+}
+.md pre code {
+  padding: 0;
+  background: none;
+}
+.md blockquote {
+  padding-left: 12px;
+  border-left: 3px solid var(--mantine-color-default-border);
+  color: var(--mantine-color-dimmed);
+}
+.md a {
+  color: var(--mantine-color-anchor);
+}
+.md table {
+  border-collapse: collapse;
+  margin-bottom: 0.75em;
+}
+.md th,
+.md td {
+  border: 1px solid var(--mantine-color-default-border);
+  padding: 4px 8px;
+}
+.md mark,
+mark.hl {
+  background: var(--mantine-color-yellow-light);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 2px;
+}
+
+/* Reduced motion: no transitions anywhere. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+html.reduce-motion *,
+html.reduce-motion *::before,
+html.reduce-motion *::after {
+  transition-duration: 0.01ms !important;
+  animation-duration: 0.01ms !important;
+}
+
+/* View-transition theme reveal (prefs.setTheme). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Md variants. */
+.md-chat p,
+.md-chat ul,
+.md-chat ol {
+  margin-bottom: 0.5em;
+}
+.md-lead > p:first-of-type {
+  font-size: var(--mantine-font-size-md);
+  color: var(--mantine-color-text);
+}
+
+/* ---------- Production pass (critique 11) ---------- */
+
+/* Focus: Mantine rings its own components; this covers every custom tappable (rows, cards, chips built on Box). */
+:where(a, button, [role='button'], [role='link'], [role='tab'], [role='checkbox'], [role='switch'], [role='menuitem'], [role='option'], summary, [tabindex]:not([tabindex='-1'])):focus-visible {
+  outline: 2px solid var(--mantine-primary-color-filled);
+  outline-offset: 2px;
+}
+
+/* Touch targets on phones and tablets: 44px for icons, tabs, buttons, inputs and close buttons, 36px for chips.
+   Icons inside an input keep the input's height. */
+@media (pointer: coarse) {
+  .mantine-ActionIcon-root:not(.mantine-Input-section .mantine-ActionIcon-root):not(.tap-keep),
+  .mantine-CloseButton-root:not(.mantine-Input-section .mantine-CloseButton-root) {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .mantine-Button-root:not(.tap-keep) {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .mantine-Input-input:not(textarea),
+  .mantine-PillsInput-input {
+    min-height: 44px;
+  }
+  .mantine-Tabs-tab {
+    min-height: 44px;
+  }
+  .mantine-Chip-label {
+    min-height: 36px;
+  }
+  .mantine-SegmentedControl-label {
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mantine-Menu-item,
+  .mantine-Combobox-option {
+    min-height: 44px;
+  }
+  .mantine-Anchor-root.tap,
+  .tap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 44px;
+  }
+  /* A full-width tappable row (collapsible headers, list rows): 44px tall, content centred, children stretch. */
+  .tap-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 44px;
+  }
+  .mantine-Checkbox-root .mantine-Checkbox-body,
+  .mantine-Switch-root .mantine-Switch-body,
+  .mantine-Radio-root .mantine-Radio-body {
+    min-height: 44px;
+    align-items: center;
+  }
+}
+
+/* A row that is one big link or toggle. */
+.row-tap {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  width: 100%;
+  min-height: 48px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  border-radius: var(--mantine-radius-md);
+  -webkit-user-select: none;
+  user-select: none;
+}
+.row-tap:active {
+  background: var(--app-hover);
+}
+
+/* Scrolling tab rows: fade on the clipped side so it reads as "more this way". */
+.tabs-scroll {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+.tabs-scroll::-webkit-scrollbar {
+  display: none;
+}
+.tabs-scroll[data-fade-end] {
+  mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
+}
+.tabs-scroll[data-fade-start] {
+  mask-image: linear-gradient(to left, #000 calc(100% - 32px), transparent);
+}
+.tabs-scroll[data-fade-start][data-fade-end] {
+  mask-image: linear-gradient(to right, transparent, #000 32px, #000 calc(100% - 32px), transparent);
+}
+
+/* Utility classes in place of repeated inline styles. */
+.min0 {
+  min-width: 0;
+}
+.grow {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.shrink0 {
+  flex-shrink: 0;
+}
+.clamp2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+/* Checked filled chips take the per-scheme contrast colour (white on indigo-6, near-black on indigo-3). */
+.mantine-Chip-label[data-checked]:not([data-variant='light']):not([data-variant='outline']) {
+  color: var(--mantine-primary-color-contrast);
+}
+
+/* Native feel: no text selection on controls, scroll areas don't drag the page. */
+button,
+[role='tab'],
+[role='button'],
+.mantine-Chip-label,
+.mantine-Badge-root {
+  -webkit-user-select: none;
+  user-select: none;
+}
+.mantine-ScrollArea-viewport,
+.mantine-Modal-body,
+.mantine-Drawer-body {
+  overscroll-behavior: contain;
+}
+
+/* Pull to refresh indicator. */
+.ptr {
+  position: fixed;
+  left: 50%;
+  top: calc(var(--app-shell-header-offset, 56px) + 8px);
+  z-index: 150;
+  width: 36px;
+  height: 36px;
+  margin-left: -18px;
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--app-surface);
+  border: 1px solid var(--mantine-color-default-border);
+  color: var(--mantine-primary-color-filled);
+  box-shadow: var(--mantine-shadow-sm);
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+
+/* Long lists: let the browser skip layout and paint of rows far off screen. */
+.cv-row {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 56px;
+}
+
+/* Thin progress line while data refreshes in place. */
+.refresh-line {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--app-shell-header-offset, 56px);
+  height: 2px;
+  z-index: 160;
+  overflow: hidden;
+  pointer-events: none;
+}
+.refresh-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: var(--mantine-primary-color-filled);
+  animation: refresh-slide 900ms ease-in-out infinite;
+}
+@keyframes refresh-slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
+/* Mixed-language user text: each paragraph takes its direction from its own first strong letter. */
+.mantine-Text-root,
+.mantine-Title-root,
+.chat-msg,
+textarea,
+input[type='text'],
+input:not([type]) {
+  unicode-bidi: plaintext;
+}
+
+/* ui/Row: one list row, 56 px. */
+.ui-row {
+  min-height: 56px;
+  padding-block: 6px;
+}
+
+/* Past timeline rows: dimmed text instead of opacity, so the text still passes 4.5:1. */
+li[data-past] .mantine-Text-root, li[data-past] time { color: var(--mantine-color-dimmed); }
+li[data-past] svg { opacity: 0.6; }

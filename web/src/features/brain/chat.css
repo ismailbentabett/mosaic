@@ -1,0 +1,536 @@
+/* Chat (home screen). Prefix .ck- so nothing collides with the retired chat.css.
+   Layout: history rail + one centered conversation column; the composer is pinned to the bottom edge. */
+
+.ck {
+  --ck-col: 760px;
+  --ck-top: var(--app-shell-header-offset, 56px);
+  --ck-bottom: var(--app-shell-footer-offset, 0px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: calc(100dvh - var(--ck-top) - var(--ck-bottom));
+}
+@media (min-width: 64em) {
+  .ck {
+    grid-template-columns: 264px minmax(0, 1fr);
+  }
+}
+
+/* ---------- history rail (desktop) ---------- */
+.ck-rail {
+  position: sticky;
+  top: var(--ck-top);
+  height: calc(100dvh - var(--ck-top));
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 12px;
+  border-right: 1px solid var(--mantine-color-default-border);
+  min-width: 0;
+}
+.ck-rail-list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  margin-inline: -4px;
+  padding-inline: 4px;
+  scrollbar-width: thin;
+}
+.ck-group-label {
+  padding: 12px 10px 4px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mantine-color-dimmed);
+}
+.ck-chat-row {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  text-align: left;
+  color: var(--mantine-color-text);
+  transition: background-color 120ms ease;
+}
+.ck-chat-row:hover:not(:disabled) {
+  background: var(--mantine-color-default-hover);
+}
+.ck-chat-row[aria-current='true'] {
+  background: var(--mantine-primary-color-light);
+}
+.ck-chat-row:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.ck-chat-title {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  line-height: 1.35;
+}
+.ck-chat-meta {
+  display: block;
+  font-size: 12px;
+  color: var(--mantine-color-dimmed);
+}
+
+/* ---------- conversation column ---------- */
+.ck-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.ck-bar {
+  position: sticky;
+  top: var(--ck-top);
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 6px 16px;
+  background: color-mix(in srgb, var(--app-bg, var(--mantine-color-body)) 88%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 160ms ease;
+}
+.ck-bar[data-scrolled='true'] {
+  border-bottom-color: var(--mantine-color-default-border);
+}
+.ck-bar-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  font-weight: 600;
+}
+.ck-col {
+  width: 100%;
+  max-width: var(--ck-col);
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+@media (min-width: 48em) {
+  .ck-col {
+    padding-inline: 24px;
+  }
+}
+.ck-scroll {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding-block: 16px 24px;
+}
+
+/* ---------- messages ---------- */
+.ck-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ck-day {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--mantine-color-dimmed);
+  list-style: none;
+}
+.ck-day::before,
+.ck-day::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--mantine-color-default-border);
+}
+.ck-msg {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  list-style: none;
+  animation: ck-in 220ms ease-out both;
+}
+@keyframes ck-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.ck-msg-user {
+  align-items: flex-end;
+}
+.ck-bubble {
+  max-width: min(85%, 600px);
+  padding: 10px 14px;
+  border-radius: 20px 20px 6px 20px;
+  background: var(--mantine-primary-color-light);
+  color: var(--mantine-color-text);
+  font-size: 16px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.ck-bubble.is-cmd {
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 14px;
+}
+.ck-ai {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  column-gap: 12px;
+}
+.ck-avatar {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  background: var(--mantine-primary-color-light);
+  color: var(--mantine-primary-color-light-color);
+}
+.ck-ai-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding-top: 3px;
+}
+.ck-md {
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 47.99em) {
+  .ck-ai {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 6px;
+  }
+  .ck-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+  }
+}
+
+/* Tool steps: one pill, opens to a list. */
+.ck-steps-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid var(--mantine-color-default-border);
+  font-size: 12px;
+  color: var(--mantine-color-dimmed);
+  transition: background-color 120ms ease, color 120ms ease;
+}
+.ck-steps-btn:hover {
+  background: var(--mantine-color-default-hover);
+  color: var(--mantine-color-text);
+}
+.ck-steps-list {
+  margin: 6px 0 0;
+  padding: 8px 12px 8px 28px;
+  border-left: 2px solid var(--mantine-color-default-border);
+  font-size: 12px;
+  color: var(--mantine-color-dimmed);
+}
+.ck-working {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--mantine-color-dimmed);
+}
+.ck-shimmer {
+  background: linear-gradient(90deg, var(--mantine-color-dimmed) 0%, var(--mantine-color-text) 50%, var(--mantine-color-dimmed) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ck-shimmer 1.6s linear infinite;
+}
+@keyframes ck-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+.ck-msg.is-live .ck-md > div > :last-child::after {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 6px;
+  border-radius: 50%;
+  vertical-align: middle;
+  background: var(--mantine-primary-color-filled);
+  animation: ck-pulse 1s ease-in-out infinite;
+}
+@keyframes ck-pulse {
+  50% { opacity: 0.25; }
+}
+
+/* Message actions: icons only. Pointer: on hover/focus (always on the latest reply). Touch: always, quiet. */
+.ck-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 28px;
+  color: var(--mantine-color-dimmed);
+}
+.ck-msg-user .ck-actions {
+  justify-content: flex-end;
+}
+.ck-time {
+  padding-inline: 6px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--mantine-color-dimmed);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ck-actions {
+    opacity: 0;
+    transition: opacity 140ms ease;
+  }
+  .ck-msg:hover .ck-actions,
+  .ck-msg:focus-within .ck-actions,
+  .ck-msg[data-last='true'] .ck-actions {
+    opacity: 1;
+  }
+}
+@media (hover: none) {
+  .ck-msg-user .ck-actions {
+    display: none;
+  }
+  .ck-msg-user:focus-within .ck-actions {
+    display: flex;
+  }
+}
+
+/* ---------- empty state ---------- */
+.ck-empty {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding-block: 24px;
+}
+.ck-hello {
+  margin: 0;
+  font-size: clamp(24px, 4.4vw, 32px);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.ck-hello-sub {
+  margin: 6px 0 0;
+  font-size: 16px;
+  color: var(--mantine-color-dimmed);
+}
+.ck-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 48em) {
+  .ck-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.ck-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  padding: 14px;
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: 16px;
+  background: var(--mantine-color-default);
+  text-align: left;
+  transition: border-color 140ms ease, background-color 140ms ease, transform 140ms ease;
+}
+.ck-card:hover:not(:disabled) {
+  border-color: var(--mantine-primary-color-filled);
+  background: var(--mantine-color-default-hover);
+}
+.ck-card:active:not(:disabled) {
+  transform: scale(0.98);
+}
+.ck-card:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.ck-card-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--mantine-primary-color-light);
+  color: var(--mantine-primary-color-light-color);
+}
+.ck-card-label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.ck-card-hint {
+  margin-top: -6px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--mantine-color-dimmed);
+}
+
+/* ---------- footer + composer ---------- */
+.ck-foot {
+  position: sticky;
+  bottom: var(--ck-bottom);
+  z-index: 5;
+  padding-top: 18px;
+  padding-bottom: max(12px, var(--sab, 0px));
+  background: linear-gradient(to bottom, transparent, var(--app-bg, var(--mantine-color-body)) 18px);
+}
+body.kb-open .ck-foot {
+  padding-bottom: 8px;
+}
+.ck-composer {
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: 24px;
+  background: var(--mantine-color-default);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.06), 0 8px 24px -12px rgb(0 0 0 / 0.25);
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+.ck-composer:focus-within {
+  border-color: color-mix(in srgb, var(--mantine-primary-color-filled) 60%, var(--mantine-color-default-border));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--mantine-primary-color-filled) 18%, transparent), 0 8px 24px -12px rgb(0 0 0 / 0.25);
+}
+.ck-composer textarea {
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+  padding: 14px 16px 4px !important;
+}
+.ck-tools {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px 8px;
+}
+.ck-spacer {
+  flex: 1 1 auto;
+}
+.ck-hint {
+  margin-top: 6px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--mantine-color-dimmed);
+}
+@media (hover: none), (max-width: 47.99em) {
+  .ck-hint {
+    display: none;
+  }
+}
+
+/* Slash palette */
+.ck-palette {
+  margin-bottom: 8px;
+  padding: 4px;
+  max-height: 40vh;
+  overflow-y: auto;
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: 16px;
+  background: var(--app-bg, var(--mantine-color-body));
+  box-shadow: 0 12px 32px -12px rgb(0 0 0 / 0.35);
+}
+.ck-cmd {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-align: left;
+}
+.ck-cmd[aria-selected='true'] {
+  background: var(--mantine-color-default-hover);
+}
+.ck-cmd-name {
+  flex: none;
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--mantine-primary-color-light-color);
+}
+.ck-cmd-help {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  color: var(--mantine-color-dimmed);
+}
+
+/* Jump to latest */
+.ck-jump {
+  position: absolute;
+  left: 50%;
+  top: -26px;
+  translate: -50% 0;
+  box-shadow: 0 6px 18px -6px rgb(0 0 0 / 0.4);
+}
+
+/* Voice state line */
+.ck-voice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--mantine-color-dimmed);
+}
+.ck-voice-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mantine-color-dimmed);
+}
+.ck-voice[data-phase='listening'] .ck-voice-dot {
+  background: var(--mantine-color-signal-filled, #e8590c);
+  animation: ck-pulse 1s ease-in-out infinite;
+}
+.ck-voice[data-phase='thinking'] .ck-voice-dot,
+.ck-voice[data-phase='speaking'] .ck-voice-dot {
+  background: var(--mantine-primary-color-filled);
+  animation: ck-pulse 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ck-msg,
+  .ck-shimmer,
+  .ck-voice-dot,
+  .ck-msg.is-live .ck-md > div > :last-child::after {
+    animation: none !important;
+  }
+  .ck-shimmer {
+    color: var(--mantine-color-dimmed);
+    background: none;
+  }
+}
+html.reduce-motion :is(.ck-msg, .ck-shimmer, .ck-voice-dot) {
+  animation: none !important;
+}
