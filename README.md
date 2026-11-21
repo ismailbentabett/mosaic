@@ -33,9 +33,11 @@ self-hosted app, with a chat-first UI and an MCP server so Claude can run it wit
 
 <br/>
 
+<b>🤖 Android · 🪟 Windows · 🌐 Web</b> — one app, same data, phone and desktop.
+
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/desktop-today-dark.png" />
-  <img src="docs/screenshots/desktop-today-light.png" alt="Mosaic Today screen" width="900" />
+  <source media="(prefers-color-scheme: dark)" srcset="docs/showcase/hero-dark.png" />
+  <img src="docs/showcase/hero-light.png" alt="Mosaic as a Windows app with the Android app in front" width="960" />
 </picture>
 
 </div>
@@ -66,6 +68,38 @@ no server, no account, nothing leaves the device.
 Every `v*` tag rebuilds both apps in CI ([release workflow](.github/workflows/release.yml)): Capacitor
 for Android, Tauri 2 for Windows. All versions: [Releases](https://github.com/ismailbentabett/mosaic/releases).
 
+## Mobile and desktop
+
+### 📱 On your phone (Android)
+
+Built for one hand: bottom navigation, big tap targets, chat at the center.
+
+<p align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/showcase/phones-dark.png" />
+  <img src="docs/showcase/phones-light.png" alt="Mosaic Android app: Chat, Today, Money and Habits screens" />
+</picture>
+</p>
+
+<p align="center">
+  <a href="https://github.com/ismailbentabett/mosaic/releases/latest/download/Mosaic.apk"><img src="https://img.shields.io/badge/Download-Mosaic.apk-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Download Mosaic.apk" /></a>
+</p>
+
+### 🖥️ On your desktop (Windows)
+
+A native window with the full sidebar, wide tables and side-by-side panels.
+
+<p align="center">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/showcase/windows-dark.png" />
+  <img src="docs/showcase/windows-light.png" alt="Mosaic Windows app: Chat, Tasks, Money and Gym screens" />
+</picture>
+</p>
+
+<p align="center">
+  <a href="https://github.com/ismailbentabett/mosaic/releases/latest/download/Mosaic-Setup.exe"><img src="https://img.shields.io/badge/Download-Mosaic--Setup.exe-0078D4?style=for-the-badge&logo=windows&logoColor=white" alt="Download Mosaic-Setup.exe" /></a>
+</p>
+
 ## Highlights
 
 | | |
@@ -78,7 +112,7 @@ for Android, Tauri 2 for Windows. All versions: [Releases](https://github.com/is
 | 🌗 **Light and dark, phone and desktop** | One responsive bundle, theme tokens only, enforced by a UI lint. |
 | 🗃️ **Open formats** | SQLite, Markdown, CSV and ICS. No vendor lock-in, no telemetry. |
 
-## Screenshots
+## Every screen
 
 <table>
   <tr>
@@ -246,6 +280,7 @@ Run from the repository root.
 | `npm run build` | API bundles, web app and demo build |
 | `npm run check` | Everything above, the same as CI |
 | `npm run screenshots` | Re-renders `docs/screenshots/` with Playwright |
+| `node scripts/showcase.mjs` | Frames those screenshots as Android and Windows apps in `docs/showcase/` |
 
 ## Quality
 

@@ -4,8 +4,6 @@ dist-demo/
 *.db
 *.db-*
 *.sqlite*
-.env
-.env.local
 *.log
 coverage/
 .DS_Store
@@ -14,3 +12,4 @@ web/test-results/
 web/playwright-report/
 .claude/
 *.tsbuildinfo
+config.bat
